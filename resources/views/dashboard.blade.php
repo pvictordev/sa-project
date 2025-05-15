@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="title">
-        Profile
+        @lang('dashboard.profileTitle')
     </x-slot>
 
     <x-nav-custom></x-nav-custom>
@@ -11,12 +11,12 @@
 
         <div class="max-w-7xl mx-auto sm:p-6 lg:p-8">
             <div class="mx-auto p-4">
-                <div class="border-2 border-gray-200 mx-auto rounded-lg shadow-lg overflow-hidden  dark:text-slate-200 bg-slate-200 dark:bg-slate-700">
+                <div class="border-2 border-gray-200 mx-auto rounded-lg shadow-lg overflow-hidden dark:text-slate-200 bg-slate-200 dark:bg-slate-700">
                     <div class="flex justify-center flex-col items-center px-6 py-4 relative">
                         <div class="absolute top-2 right-2">
                             <div @click.away="open = false" class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                                    <span class="">Switch</span>
+                                    <span>@lang('dashboard.switch')</span>
                                     <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                     </svg>
@@ -32,8 +32,8 @@
                                                     </svg>
                                                 </div>
                                                 <div class="ml-3">
-                                                    <p class="font-semibold text-left">Client</p>
-                                                    <p class="text-sm">Client profile</p>
+                                                    <p class="font-semibold text-left">@lang('dashboard.client')</p>
+                                                    <p class="text-sm">@lang('dashboard.clientProfile')</p>
                                                 </div>
                                             </a>
 
@@ -42,11 +42,10 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
                                                         <path d="M4 12H3V8C3 6.89543 3.89543 6 5 6H9M4 12V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V12M4 12H10M20 12H21V8C21 6.89543 20.1046 6 19 6H15M20 12H14M14 12V10H10V12M14 12V14H10V12M9 6V5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V6M9 6H15" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                     </svg>
-
                                                 </div>
                                                 <div class="ml-3">
-                                                    <p class="font-semibold text-left">Freelancer</p>
-                                                    <p class="text-sm">Freelancer profile</p>
+                                                    <p class="font-semibold text-left">@lang('dashboard.freelancer')</p>
+                                                    <p class="text-sm">@lang('dashboard.freelancerProfile')</p>
                                                 </div>
                                             </a>
 
@@ -56,11 +55,10 @@
                                                         <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                         <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                     </svg>
-
                                                 </div>
                                                 <div class="ml-3">
-                                                    <p class="font-semibold text-left">User profile</p>
-                                                    <p class="text-sm">User profile</p>
+                                                    <p class="font-semibold text-left">@lang('dashboard.userProfile')</p>
+                                                    <p class="text-sm">@lang('dashboard.userProfile')</p>
                                                 </div>
                                             </a>
                                         </div>
@@ -68,58 +66,52 @@
                                 </div>
                             </div>
                         </div>
-                        @if(Auth::user()->picture)
-                        <!-- <img src="{{ Storage::url(Auth::user()->picture) }}" alt="Profile Picture" class="h-24 w-24 object-cover border-2 border-slate-400 rounded-full mx-auto mb-1 sm:mb-0 sm:mr-1 sm:ml-0"> -->
-                        <img src="{{ Storage::disk('s3')->url(Auth::user()->picture) }}" alt="Profile Picture" class="h-24 w-24 object-cover border-2 border-slate-400 rounded-full mx-auto mb-1 sm:mb-0 sm:mr-1 sm:ml-0">
 
+                        @if(Auth::user()->picture)
+                        <img src="{{ Storage::disk('s3')->url(Auth::user()->picture) }}" alt="@lang('dashboard.profilePictureAlt')" class="h-24 w-24 object-cover border-2 border-slate-400 rounded-full mx-auto mb-1 sm:mb-0 sm:mr-1 sm:ml-0">
                         @else
-                        <img src="https://placehold.co/128" alt="Profile Picture" class="h-24 w-24 object-cover border-2 border-slate-400 rounded-full mx-auto mb-1 sm:mb-0 sm:mr-1 sm:ml-0">
+                        <img src="https://placehold.co/128" alt="@lang('dashboard.profilePictureAlt')" class="h-24 w-24 object-cover border-2 border-slate-400 rounded-full mx-auto mb-1 sm:mb-0 sm:mr-1 sm:ml-0">
                         @endif
 
                         <div class="text-center">
                             <p class="text-xl font-semibold">{{$userData['name']}}</p>
                             <p class="text-sm text-center font-medium">{{ $userData['email'] }}</p>
                             <div class="mt-4 absolute top-0 left-2">
-                                <a href="/profile" class="text-xs font-semibold bg-gray-300 dark:bg-slate-200 dark:text-slate-800 rounded-full px-4 py-2 leading-none inline-block text-gray-700 mr-2">Edit Profile</a>
+                                <a href="/profile" class="text-xs font-semibold bg-gray-300 dark:bg-slate-200 dark:text-slate-800 rounded-full px-4 py-2 leading-none inline-block text-gray-700 mr-2">@lang('dashboard.editProfile')</a>
                             </div>
                         </div>
 
                     </div>
 
                     <div class="border-t border-gray-400 px-6 py-4">
-                        <p class="text-lg font-semibold mb-2">Name</p>
+                        <p class="text-lg font-semibold mb-2">@lang('dashboard.name')</p>
                         <p class="text-slate-500">
                             @if(isset($userData['name']))
                             {{$userData['name']}}
                             @else
-                        <p class="text-red-500">No name found.</p>
-
+                        <p class="text-red-500">@lang('dashboard.noName')</p>
                         @endif
                         </p>
                     </div>
 
-
-
                     <div class="border-t border-gray-400 px-6 py-4">
-                        <p class="text-lg font-semibold mb-2">Email</p>
+                        <p class="text-lg font-semibold mb-2">@lang('dashboard.email')</p>
                         <p class="text-slate-500">
                             @if(isset($userData['email']))
                             {{$userData['email']}}
                             @else
-                        <p class="text-red-500">No email found.</p>
-
+                        <p class="text-red-500">@lang('dashboard.noEmail')</p>
                         @endif
                         </p>
                     </div>
 
                     <div class="border-t border-gray-400 px-6 py-4">
-                        <p class="text-lg font-semibold mb-2">Phone</p>
+                        <p class="text-lg font-semibold mb-2">@lang('dashboard.phone')</p>
                         <p class="text-slate-500">
                             @if(isset($userData['phone']))
                             {{$userData['phone']}}
                             @else
-                        <p class="text-red-500">No phone found.</p>
-
+                        <p class="text-red-500">@lang('dashboard.noPhone')</p>
                         @endif
                         </p>
                     </div>
