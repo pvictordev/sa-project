@@ -14,7 +14,11 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         DB::table('categories')->insert([
-            'category_name' => Str::random(5),
+            ['category_name' => 'Web Development'],
+            ['category_name' => 'Graphic Design'],
+            ['category_name' => 'Content Writing'],
+            ['category_name' => 'SEO'],
+            ['category_name' => 'Video Editing'],
         ]);
     }
 }

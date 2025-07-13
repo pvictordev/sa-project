@@ -15,7 +15,11 @@ class SkillSeeder extends Seeder
     {
         //
         DB::table('skills')->insert([
-            'skill_name' => Str::random(5),
+            ['skill_name' => 'Web Development'],
+            ['skill_name' => 'Graphic Design'],
+            ['skill_name' => 'Content Writing'],
+            ['skill_name' => 'SEO'],
+            ['skill_name' => 'Video Editing'],
         ]);
     }
 }

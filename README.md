@@ -152,13 +152,18 @@ https://sa-project-production.up.railway.app/
     php artisan db:seed
     ```
 
-9. **Build the front-end assets and run the project.**
+9.
+
+10. **Install the assets and run the project**
 
     ```
+    npm install
+    npm run build
     npm run dev
+    composer install
     php artisan serve
     ```
 
-10. **Access the application**
+11. **Access the application**
 
     Open your web browser and navigate to `http://localhost:8000.`
