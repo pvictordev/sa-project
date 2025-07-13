@@ -43,31 +43,13 @@
 
             <!-- picture preview -->
             <div>
-                <img src="{{ Storage::disk('s3')->url(Auth::user()->picture) }}" class="w-32 h-32 rounded-lg object-cover border-2 border-slate-400" alt="Profile Picture" class="img-thumbnail">
-
-                <!-- <img :src="imageSource" class="w-32 h-32 rounded-lg object-cover border-2 border-slate-400" alt="Profile Picture" class="img-thumbnail"> -->
-                 <!-- <img src="{{$user->picture}}" class="w-32 h-32 rounded-lg object-cover border-2 border-slate-400" alt="Profile Picture"> -->
-
+                <img
+                    :src="imageSource"
+                    class="w-32 h-32 rounded-lg object-cover border-2 border-slate-400"
+                    alt="Profile Picture"
+                    onerror="this.onerror=null;this.src='https://placehold.co/128'">
             </div>
         </div>
-
-        <script>
-            function imagePreview() {
-                return {
-                    imageSource: "{{$user->picture ? Storage::url($user->picture) : 'https://placehold.co/128x128'}}",
-                    updatePreview(event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                this.imageSource = e.target.result;
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    }
-                }
-            }
-        </script>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -102,3 +84,20 @@
         </div>
     </form>
 </section>
+<script>
+    function imagePreview() {
+        return {
+            imageSource: "{{ Auth::check() && Auth::user()->picture ? Storage::disk('s3')->url(Auth::user()->picture) : 'https://placehold.co/128' }}",
+            updatePreview(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.imageSource = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    }
+</script>

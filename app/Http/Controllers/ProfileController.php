@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -31,29 +32,44 @@ class ProfileController extends Controller
         $validatedData = $request->validated();
 
         if ($request->hasFile('picture')) {
-            $request->validate([
-                'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            $file = $request->file('picture');
+
+            Log::info('Attempting to upload file:', [
+                'original_name' => $file->getClientOriginalName(),
+                'size' => $file->getSize(),
+                'mime_type' => $file->getMimeType()
             ]);
 
-            //! Delete the old picture if it exists
-            if ($request->user()->picture) {
-                Storage::disk('s3')->delete($request->user()->picture);
-                // Storage::delete($request->user()->picture);
+            if (!$file->isValid()) {
+                Log::error('Invalid file upload:', ['error' => $file->getErrorMessage()]);
+                return back()->withErrors(['picture' => 'File upload error: ' . $file->getErrorMessage()]);
             }
 
-            //! Store the image in S3 and get the file path
-            $filePath = $request->file('picture')->store('public/images', 's3');
-            // $filePath = $request->file('picture')->store('public/images');
+            try {
+                // Delete old picture if exists
+                if ($request->user()->picture) {
+                    Log::info('Attempting to delete old picture:', ['path' => $request->user()->picture]);
+                    Storage::disk('s3')->delete($request->user()->picture);
+                }
 
-            Storage::disk('s3')->setVisibility($filePath, 'public');
+                // Generate unique filename
+                $filename = 'user_' . $request->user()->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $path = 'public/images/' . $filename;
+                Storage::disk('s3')->put($path, file_get_contents($file), ['visibility' => 'public']);
+                Log::info('File uploaded successfully:', [
+                    'path' => $path
+                ]);
 
-            //! Generate the full S3 `URL`
-            // * fix the error
-            // $validatedData['picture'] = Storage::disk('s3')->url($filePath);
-            $validatedData['picture'] = $filePath;
+                $validatedData['picture'] = $path;
+            } catch (\Exception $e) {
+                Log::error('S3 Upload Error:', [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                return back()->withErrors(['picture' => 'Failed to upload image: ' . $e->getMessage()]);
+            }
         }
 
-        //! Fill the user model with validated data
         $request->user()->fill($validatedData);
 
         if ($request->user()->isDirty('email')) {
@@ -62,7 +78,9 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-     return Redirect::route('dashboard')->with('status', 'profile-updated')->with('success', 'Profile successfully updated.');
+        return Redirect::route('dashboard')
+            ->with('status', 'profile-updated')
+            ->with('success', 'Profile successfully updated.');
     }
 
     /**
