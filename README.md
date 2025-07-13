@@ -150,11 +150,11 @@ https://sa-project-production.up.railway.app/
 
     ```
     php artisan db:seed
+    php artisan db:seed CategorySeeder
+    php artisan db:seed SkillSeeder
     ```
 
-9.
-
-10. **Install the assets and run the project**
+9. **Build and run the project**
 
     ```
     npm install
@@ -164,6 +164,6 @@ https://sa-project-production.up.railway.app/
     php artisan serve
     ```
 
-11. **Access the application**
+10. **Access the application**
 
     Open your web browser and navigate to `http://localhost:8000.`
