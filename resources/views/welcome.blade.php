@@ -153,7 +153,7 @@
                 </div>
             </section>
 
-            <section class="container bg-white dark:bg-slate-800  py-24 sm:py-32">
+            <!-- <section class="container bg-white dark:bg-slate-800  py-24 sm:py-32">
                 <div class="mx-auto max-w-7xl px-6 lg:px-8">
                     <h2 class="text-center text-lg leading-8 font-semibold text-indigo-600">@lang('welcome.partners')</h2>
                     <div class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
@@ -164,7 +164,7 @@
                         <img class="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/statamic-logo-gray-900.svg" alt="Statamic" width="158" height="48">
                     </div>
                 </div>
-            </section>
+            </section> -->
 
             <section class="container bg-white dark:bg-slate-800 py-24 sm:py-32">
                 <div class="flex flex-col items-center">
