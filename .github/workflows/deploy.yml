@@ -31,9 +31,6 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./*"
-          target: "/var/www/phlexi/"
-          strip_components: 1
 
       - name: Run deployment commands
         uses: appleboy/ssh-action@v1.0.0
@@ -43,8 +40,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.APP_PATH }}
-            git pull origin main
             php artisan down
+            git pull origin main
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache
