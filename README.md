@@ -68,7 +68,7 @@ When you create an account, you are automatically assigned three roles:
 
 ### You can find the app live here:
 
-https://sa-project-production.up.railway.app/
+https://phlexi.uk
 
 ### Steps to run this project on your machine:
 
